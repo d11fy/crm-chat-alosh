@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "sync": "tsx scripts/sync-and-export.ts",
+    "clear-db": "node scripts/clear-db.js"
   },
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.8.0",
