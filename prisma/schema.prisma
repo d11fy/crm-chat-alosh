@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Customer {
+  id                  String          @id @default(uuid())
+  phone               String          @unique
+  name                String?
+  status              String          @default("New Lead") // "New Lead", "Interested", "Hot Lead", "Follow Up Later", "Customer", "Lost Customer"
+  leadScore           Int             @default(0)
+  purchaseProbability Float           @default(0.0) // 0 to 100
+  productsInterested  String          @default("") // comma-separated list or custom JSON
+  lastSummary         String?
+  lastContactDate     DateTime        @default(now())
+  followUpDate        DateTime?
+  suggestedReply      String?
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  memory              CustomerMemory?
+  messages            Message[]
+  sales               Sale[]
+  aiEvents            AIEvent[]
+  queue               AnalysisQueue?
+}
+
+model CustomerMemory {
+  id              String   @id @default(uuid())
+  customerId      String   @unique
+  customer        Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  summary         String   @default("")
+  interests       String   @default("")
+  objections      String   @default("")
+  purchaseHistory String   @default("")
+  lastAiUpdate    DateTime @default(now())
+}
+
+model Message {
+  id          String   @id @default(uuid())
+  customerId  String
+  customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  direction   String   // "IN" (from customer) or "OUT" (to customer)
+  messageType String   // "text", "image", "audio", "document"
+  content     String   // text body or transcription or description
+  mediaUrl    String?  // url to media if any
+  timestamp   DateTime @default(now())
+}
+
+model Sale {
+  id          String   @id @default(uuid())
+  customerId  String
+  customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  productName String
+  saleAmount  Float
+  saleDate    DateTime @default(now())
+  isDetected  Boolean  @default(false)
+}
+
+model AIEvent {
+  id         String   @id @default(uuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  oldStatus  String
+  newStatus  String
+  reason     String
+  confidence Float
+  createdAt  DateTime @default(now())
+}
+
+model AnalysisQueue {
+  id           String   @id @default(uuid())
+  customerId   String   @unique
+  customer     Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  scheduledFor DateTime
+  isProcessing Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+model AiTraining {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  title     String
+  content   String
+  updatedAt DateTime @updatedAt
+}

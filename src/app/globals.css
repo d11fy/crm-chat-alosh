@@ -1,0 +1,478 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap');
+
+:root {
+  /* نظام الألوان - HSL */
+  --bg-primary: #020617; /* خلفية داكنة جداً */
+  --bg-surface: rgba(15, 23, 42, 0.65); /* سطح زجاجي */
+  --bg-surface-hover: rgba(30, 41, 59, 0.8); /* هومر سطح زجاجي */
+  --border-color: rgba(255, 255, 255, 0.08); /* حواف زجاجية */
+  --border-glow: rgba(16, 185, 129, 0.15); /* توهج أخضر زمردي */
+
+  /* الألوان الأساسية والثانوية */
+  --primary: #10b981; /* أخضر زمردي واتساب */
+  --primary-hover: #059669;
+  --primary-glow: rgba(16, 185, 129, 0.2);
+  --secondary: #6366f1; /* بنفسجي نيوني */
+  --secondary-glow: rgba(99, 102, 241, 0.2);
+
+  /* نصوص */
+  --text-main: #f8fafc; /* أبيض ناصع */
+  --text-secondary: #94a3b8; /* رمادي ناعم */
+  --text-muted: #64748b; /* رمادي باهت */
+
+  /* حالات العملاء */
+  --status-new-lead: #3b82f6; /* أزرق */
+  --status-interested: #0d9488; /* فيروزي */
+  --status-hot-lead: #f59e0b; /* ذهبي/برتقالي */
+  --status-follow-up: #8b5cf6; /* بنفسجي */
+  --status-customer: #10b981; /* أخضر زمردي */
+  --status-lost: #ef4444; /* أحمر */
+
+  --font-tajawal: 'Tajawal', sans-serif;
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* إعادة ضبط وتنسيق الصفحة */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-tajawal);
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.07) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.07) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: var(--text-main);
+  overflow-x: hidden;
+  direction: rtl; /* دعم اللغة العربية */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* تنسيق الـ Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* فئات Glassmorphism الأساسية */
+.glass-panel {
+  background: var(--bg-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  box-shadow: var(--glass-shadow);
+  transition: var(--transition-smooth);
+}
+
+.glass-panel:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5);
+}
+
+.glass-panel-glow:hover {
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(16, 185, 129, 0.1);
+}
+
+/* تصميم الهيكل العام (Layout) */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 280px;
+  height: 100vh;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border-color);
+  background: rgba(10, 15, 30, 0.8);
+  backdrop-filter: blur(20px);
+  padding: 24px 16px;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 40px;
+  padding: 0 8px;
+}
+
+.sidebar-logo span {
+  color: var(--primary);
+  text-shadow: 0 0 10px var(--primary-glow);
+}
+
+.sidebar-menu {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: var(--transition-smooth);
+  cursor: pointer;
+}
+
+.sidebar-link:hover, .sidebar-link.active {
+  color: var(--text-main);
+  background: var(--bg-surface-hover);
+  border-right: 4px solid var(--primary);
+}
+
+.sidebar-link.active {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--primary);
+}
+
+/* المحتوى الرئيسي */
+.main-content {
+  margin-right: 280px;
+  flex-grow: 1;
+  padding: 32px;
+  min-height: 100vh;
+  transition: var(--transition-smooth);
+}
+
+/* لوحة التحكم والبطاقات الإحصائية */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--card-accent, var(--primary)), transparent);
+}
+
+.stat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  color: var(--text-secondary);
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--card-accent, var(--primary));
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.stat-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* شارات الحالة (Status Badges) */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  gap: 6px;
+}
+
+.badge-new-lead { background: rgba(59, 130, 246, 0.15); color: var(--status-new-lead); }
+.badge-interested { background: rgba(13, 148, 136, 0.15); color: var(--status-interested); }
+.badge-hot-lead { background: rgba(245, 158, 11, 0.15); color: var(--status-hot-lead); }
+.badge-follow-up { background: rgba(139, 92, 246, 0.15); color: var(--status-follow-up); }
+.badge-customer { background: rgba(16, 185, 129, 0.15); color: var(--status-customer); }
+.badge-lost { background: rgba(239, 68, 68, 0.15); color: var(--status-lost); }
+
+/* الأزرار الاحترافية */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  border: none;
+  outline: none;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #020617;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 10px;
+}
+
+/* المدخلات (Inputs) */
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  outline: none;
+  font-size: 0.95rem;
+  transition: var(--transition-smooth);
+}
+
+.form-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.15);
+  background: rgba(15, 23, 42, 0.7);
+}
+
+/* الجداول (Tables) */
+.table-container {
+  overflow-x: auto;
+  margin-top: 24px;
+}
+
+.crm-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: right;
+}
+
+.crm-table th {
+  padding: 16px;
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--border-color);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.crm-table td {
+  padding: 16px;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.95rem;
+  transition: var(--transition-smooth);
+}
+
+.crm-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* واجهة المحادثة شات واتساب */
+.chat-container {
+  display: flex;
+  height: calc(100vh - 120px);
+  gap: 24px;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20px;
+  overflow-y: auto;
+  background: rgba(5, 5, 10, 0.3);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  gap: 16px;
+}
+
+.message-bubble {
+  max-width: 65%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.message-bubble.in {
+  align-self: flex-start;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  border-top-right-radius: 4px;
+}
+
+.message-bubble.out {
+  align-self: flex-end;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #a7f3d0;
+  border-top-left-radius: 4px;
+}
+
+.message-meta {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* شاشة المحادثة مع المساعد الذكي */
+.assistant-messages {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+  overflow-y: auto;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.2);
+  border: 1px solid var(--border-color);
+  min-height: 450px;
+  max-height: 600px;
+}
+
+.assistant-bubble {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  line-height: 1.6;
+}
+
+.assistant-bubble.user {
+  background: rgba(99, 102, 241, 0.08);
+  border-right: 4px solid var(--secondary);
+}
+
+.assistant-bubble.bot {
+  background: rgba(16, 185, 129, 0.08);
+  border-right: 4px solid var(--primary);
+}
+
+/* التوافقية مع الأجهزة المحمولة (Responsive) */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 80px;
+    padding: 24px 8px;
+  }
+  .sidebar-logo span {
+    display: none;
+  }
+  .sidebar-link span {
+    display: none;
+  }
+  .main-content {
+    margin-right: 80px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-left: none;
+    border-bottom: 1px solid var(--border-color);
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 16px;
+  }
+  .sidebar-logo {
+    margin-bottom: 0;
+  }
+  .sidebar-menu {
+    flex-direction: row;
+    gap: 4px;
+  }
+  .sidebar-link {
+    padding: 8px 12px;
+  }
+  .main-content {
+    margin-right: 0;
+    padding: 16px;
+  }
+  .chat-container {
+    flex-direction: column;
+    height: auto;
+  }
+}
