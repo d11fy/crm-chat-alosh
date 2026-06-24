@@ -45,3 +45,7 @@ next-env.d.ts
 # sqlite databases
 *.db
 *.db-journal
+
+# user exports
+contacts.csv
+*.csv
